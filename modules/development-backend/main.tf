@@ -35,7 +35,7 @@ module "demo-backend-template" {
   }
   create_template = true
   metadata = {
-    startup-script = "sudo mkdir -p /var/www && cd /var/www && echo 'hello from demo' > index.html && python3 -m http.server 80"
+    startup-script = "sudo mkdir -p /var/www && cd /var/www && echo \"<h1>Hello from ${var.name} in ${var.region}</h1>\" > index.html && python3 -m http.server 80"
   }
   service_account_create = true
   service_account_scopes = ["cloud-platform"]
@@ -47,7 +47,7 @@ module "demo-backend-mig" {
   location    = var.region
   regional    = true
   name        = "${var.name}-${var.region}"
-  target_size = 2
+  target_size = var.target_size
   default_version = {
     instance_template = module.demo-backend-template.template.self_link
     name              = "default"
@@ -89,3 +89,5 @@ resource "google_compute_firewall" "hc-allow" {
     ports    = ["80"]
   }
 }
+
+

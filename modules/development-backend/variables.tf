@@ -43,5 +43,11 @@ variable "region" {
 variable "machine_type" {
   description = "GCE Machine type."
   type        = string
-  default     = "e2-small"
+  default     = "f1-micro"
+}
+
+variable "target_size" {
+  description = "Target Backend MIG target size."
+  type        = number
+  default     = 1
 }
